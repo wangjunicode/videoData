@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>B站视频播放量展示</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .view-count {
+            font-size: 3em;
+            color: #fb7299; 
+            font-weight: bold;
+        }
+        .title {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">《虚环》PV02丨21分钟实机演示播放量</div>
+    <div class="view-count" id="viewCount">Loading...</div>
+    <div class="refresh-info" id="refreshInfo"></div>
+
+    <script>
+        function updateViewCount() {
+            fetch('/api/view-count')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    document.getElementById('viewCount').textContent = 
+                        data.viewCount.toLocaleString();
+                    
+                    const now = new Date();
+                    document.getElementById('refreshInfo').textContent = 
+                        `Last updated: ${now.toLocaleTimeString()}`;
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                    document.getElementById('viewCount').textContent = 'Error loading data';
+                });
+        }
+
+        updateViewCount();
+        
+        setInterval(updateViewCount, 1000);
+    </script>
+</body>
+</html>
