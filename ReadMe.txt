@@ -1,2 +1,5 @@
-1 node server.js
-2 vercel deploy
+本地测试  node server.js
+
+部署 
+vercel --force --prod
+
