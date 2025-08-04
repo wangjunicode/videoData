@@ -16,20 +16,31 @@ app.get('/api/view-count', async (req, res) => {
     const bvid = req.query.bvid || 'BV1zQhjz6EsR'; // Default video ID
     
     try {
-        // Using .then() syntax for better compatibility with Node 12
-        axios.get(`https://api.bilibili.com/x/web-interface/view?bvid=${bvid}`)
-            .then(response => {
-                const viewCount = response.data.data.stat.view;
-                res.json({ viewCount });
-            })
-            .catch(error => {
-                console.error('Error fetching Bilibili data:', error);
-                res.status(500).json({ error: 'Failed to fetch view count' });
-            });
+        const response = await axios.get(`https://api.bilibili.com/x/web-interface/view?bvid=${bvid}`);
+        const stats = response.data.data.stat;
+        
+        res.json({
+            viewCount: stats.view,      // 播放量
+            danmuCount: stats.danmaku,  // 弹幕数
+            likeCount: stats.like,      // 点赞数
+            coinCount: stats.coin,      // 投币数
+            favoriteCount: stats.favorite, // 收藏数
+            shareCount: stats.share     // 转发数
+        });
+        
     } catch (error) {
-        console.error('Unexpected error:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error fetching Bilibili data:', error);
+        res.status(500).json({ 
+            error: 'Failed to fetch video stats',
+            details: error.message 
+        });
     }
+});
+
+// Add cache control middleware
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'public, max-age=30'); // Cache for 30 seconds
+    next();
 });
 
 app.listen(PORT, () => {
