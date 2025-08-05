@@ -44,11 +44,11 @@ app.use((req, res, next) => {
 });
 
 //vercel 部署的话用这个
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server running on http://localhost:${PORT}`);
+// });
 
 //本地pm2部署的话用这个
-// app.listen(PORT, '0.0.0.0', () => {
-//     console.log(`Server running on http://0.0.0.0:${PORT}`);
-// });
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
+});
