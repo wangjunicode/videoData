@@ -38,12 +38,12 @@
             color: #666;
             font-size: 0.9em;
         }
-        .view-count { color: #fb7299; }  /* B站粉色 */
-        .danmu-count { color: #23ade5; } /* 弹幕蓝 */
-        .like-count { color: #ff4e4e; }  /* 点赞红 */
-        .coin-count { color: #f7ba2a; } /* 投币黄 */
-        .favorite-count { color: #9b59b6; } /* 收藏紫 */
-        .share-count { color: #2ecc71; } /* 转发绿 */
+        .view-count { color: #fb7299; } 
+        .danmu-count { color: #23ade5; }
+        .like-count { color: #ff4e4e; } 
+        .coin-count { color: #f7ba2a; } 
+        .favorite-count { color: #9b59b6; }
+        .share-count { color: #2ecc71; } 
         .refresh-info {
             margin-top: 20px;
             color: #999;
@@ -88,7 +88,6 @@
             fetch('/api/view-count')
                 .then(response => response.json())
                 .then(data => {
-                    // Update all stats
                     document.getElementById('viewCount').textContent = 
                         data.viewCount?.toLocaleString() || 'N/A';
                     document.getElementById('danmuCount').textContent = 
@@ -102,7 +101,6 @@
                     document.getElementById('shareCount').textContent = 
                         data.shareCount?.toLocaleString() || 'N/A';
                     
-                    // Update refresh time
                     const now = new Date();
                     document.getElementById('refreshInfo').textContent = 
                         `最后更新: ${now.toLocaleString()}`;
@@ -116,7 +114,7 @@
         }
 
         updateStats();
-        setInterval(updateStats, 1000); // Update every 5 seconds
+        setInterval(updateStats, 1000);
     </script>
 </body>
 </html>
